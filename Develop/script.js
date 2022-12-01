@@ -5,7 +5,7 @@ var confirmSpecial;
 var confirmUpper;
 var confirmLower;
 
-// Defining arrays that hold charscters user can choose from for Password//
+// Defining arrays that hold characters user can choose from for Password//
 
 special = ["!","@","#","$","%","^","&","*","(",")","_","+"];
 
@@ -18,43 +18,10 @@ number = [1,2,3,4,5,6,7,8,9];
 // Varible to house all user input choices
 var userAnswers;
 
-// // Event listner to launch createOrNot()  gen password function
-var generateBtn = document.querySelector("#generate");
-
-// // Event listner linked to HTML button.
-generateBtn.addEventListener("click", createOrNot);
-
-
 //--- ------------------INITIAL ASKING PROMPT TO CREATE PASS OR NOT ------------------------------//
 
 // Start Function to launch - Generation of Pass
 var createOrNot = function (){
-
-// prompt to ask player if they'd like to create Pass or not
-var promptPass = window.prompt(' would you like to "CREATE" a Password or "QUIT" ? ' );
-
-// Conditional 1 - if no input or incorrect input is given -- redirect to opening prompt
-if (promptPass === null || promptPass === "" ) {
-    window.alert(' Please type in a valid input, try again! ')
-    return createOrNot();
-}
-// Make machine convert everything to lowercase -- way to control input variability
-promptPass = promptPass.toLocaleLowerCase();
-
-// Conditional 2 -- if quit input is given. 
-if (promptPass === "quit") {
-    var confirmQuit = window.confirm(' Are you sure you would like to quit? ');
-
-if (confirmQuit) {
-    window.alert(' Thank you, hope you come back soon! ');
-    // exits confirmquit function
-    return;
-}
-}
-//---------------------------PASSWORD CRITERIA PROMPTS ----------------------------------------//
-
-// conditional 3 -- If Create is selected -- series of user prompts
-if (promptPass === 'CREATE' || promptPass === 'create' ) {
 
 //ask user for --Character length
 var length = parseInt(window.prompt(" Type the number of of characters you would like the password to be. Type a number between 8 and 128. "));
@@ -69,29 +36,69 @@ if(!length) {
 
 } else {
     // validation of which character types will be used
-
     confirmSpecial = confirm("Will this contain Special characters? ");
     confirmLower = confirm("Will this contain Lowercase letters? ");
     confirmUpper = confirm("Will this contain Uppercase letters? ");
     confirmNumber = confirm("Will this contain numbers? ");
 };
 }
+//------------- CONDITIONALS BASED ON USER INPUT AND FOR LOOP TO CREATE PASSWORD FROM IT -------/////
 
-//------------- CONDITIONALS BASED ON USER INPUT AND FOR LOOP  TO CREATE PASSWORD FROM IT -------/////
+/// Writing out series of options based on negative vs positive answers to the prompt
 
-// IF ---- 8 - 128 ----Then make pass this # length--- (RESTRICT PASSWORD LENGTH --- MIN AND MAX CONDITIONS/ METHODS)
+// 4 Negatives -- If all No's
+if (!confirmSpecial && !confirmNumber && !confirmUpper && !confirmLower){
+    userAnswers = alert("You must choose a criteria! ");
 
-// IF ---- If YES to LowerC --  Include
-// ---- Else --- NO to LowerC --- Then do not include and move on
+// 4 Positives
+} else if( confirmSpecial && confirmNumber && confirmUpper && confirmLower){
+    userAnswers = special.concat(number,lower,upper);
+   
+ // 3 Positives
+} else if ( confirmSpecial && confirmNumber && confirmUpper){
+    userAnswers = special.concat(number,upper);
 
-// IF ---- If YES to UpperC -- Include
-// ---- Else --- NO to UpperC --- Then do not include and move on
+} else if ( confirmSpecial && confirmNumber && confirmLower){
+    userAnswers = special.concat(number,lower);
 
-// IF ---- If YES to numberC -- Include
-// ---- Else --- NO to numberC --- Then do not include and move on
+} else if ( confirmSpecial && confirmUpper && confirmLower){
+    userAnswers = special.concat(upper,lower);
 
-// IF ---- If YES to specialC -- Include
-// ---- Else --- NO to specialC --- Then do not include and move on
+} else if ( confirmLower && confirmNumber && confirmUpper){
+    userAnswers = lower.concat(number,upper);
+
+// 2 Positives
+} else if ( confirmSpecial && confirmNumber){
+    userAnswers = special.concat(number);
+
+} else if ( confirmSpecial && confirmLower){
+    userAnswers = special.concat(lower);
+
+} else if ( confirmSpecial && confirmUpper){
+    userAnswers = special.concat(upper);
+
+} else if ( confirmLower && confirmNumber){
+    userAnswers = lower.concat(number);
+
+} else if ( confirmLower && confirmUpper){
+    userAnswers = lower.concat(upper);
+
+} else if ( confirmUpper && confirmNumber){
+    userAnswers = upper.concat(number);
+
+   // 1 Positive 
+} else if ( confirmUpper){
+    userAnswers = upper;
+
+} else if (confirmNumber){
+    userAnswers = number;
+
+}else if ( confirmSpecial){
+    userAnswers = special;
+
+}else if ( confirmLower){
+    userAnswers = lower;
+};
 
 // Takes Results and compiles a Password//
 
@@ -122,5 +129,40 @@ if(!length) {
 // //   passwordText.value = password;
 // console.log( " I touched the button");
 // }
-}
-createOrNot();
+// }
+// createOrNot();
+
+// // Event listner to launch createOrNot()  gen password function
+var generateBtn = document.querySelector("#generate");
+
+// // Event listner linked to HTML button.
+generateBtn.addEventListener("click", createOrNot);
+
+
+// Code Bank 
+
+// / prompt to ask player if they'd like to create Pass or not
+// var promptPass = window.prompt(' would you like to "CREATE" a Password or "QUIT" ? ' );
+
+// // Conditional 1 - if no input or incorrect input is given -- redirect to opening prompt
+// if (promptPass === null || promptPass === "" ) {
+//     window.alert(' Please type in a valid input, try again! ')
+//     return createOrNot();
+// }
+// // Make machine convert everything to lowercase -- way to control input variability
+// promptPass = promptPass.toLocaleLowerCase();
+
+// // Conditional 2 -- if quit input is given. 
+// if (promptPass === "quit") {
+//     var confirmQuit = window.confirm(' Are you sure you would like to quit? ');
+
+// if (confirmQuit) {
+//     window.alert(' Thank you, hope you come back soon! ');
+//     // exits confirmquit function
+//     return;
+// }
+// }
+// //---------------------------PASSWORD CRITERIA PROMPTS ----------------------------------------//
+
+// // conditional 3 -- If Create is selected -- series of user prompts
+// if (promptPass === 'CREATE' || promptPass === 'create' ) {
